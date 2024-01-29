@@ -82,6 +82,20 @@ class Banking_Application:
             return ("salary", Salary_Account().min_balance,
                     Salary_Account().opening_balance)
 
+    def display_accounts(self):
+        for account in self.accounts:
+            print(
+                f"Account Number: {account.account_number} | Name: {account.name} | Account Type: {account.type} | Balance: {account.balance}"
+            )
+
+    def update_account(self, account_number, new_name):
+        for account in self.accounts:
+            if account.account_number == account_number:
+                account.name = new_name
+                print("Account updated successfully.")
+                return
+        print("Account not found.")
+
 
 bank = Banking_Application()
 
@@ -110,7 +124,7 @@ while True:
         account_type, min_balance, opening_balance = bank.get_constrains_and_type(
             account_type_option)
         print(
-            f"Opening deposit for this account is ${opening_balance} and minimum balance is ${min_balance}"
+            f"Opening deposit for this account is {opening_balance} and minimum balance is {min_balance}"
         )
         balance = int(
             input("Enter initial balance more than opening deposit: "))
@@ -121,10 +135,12 @@ while True:
         print(f"Account created successfully. Account number is {acc_num}")
 
     elif choice == "2":
-        print(choice)
+        bank.display_accounts()
 
     elif choice == "3":
-        print(choice)
+        account_number = int(input("Enter account number to update: "))
+        new_name = input("Enter new account holder name: ")
+        bank.update_account(account_number, new_name)
 
     elif choice == "4":
         print(choice)
