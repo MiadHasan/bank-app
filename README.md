@@ -13,7 +13,7 @@ There are three account types:
 
 1. **`Saving_Account`**
 2. **`Current_Account`**
-3. **`Salary_Account`**
+3. **`Salary_Account`**\
 All the three types of account have the common attributes and methods that is:
    - Attributes: `min_balance`: Minimum balance an account should have, `opening_balance`: Initial deposit to open the account.
    - Methods: `get_min_balance()`: returns the minimun balance, `get_opening_balance()`: returns the opening balance
@@ -53,3 +53,19 @@ The `Banking_Application` class manages the overall functionality of the banking
 - Each account type may require maintaining a minimum balance before withdrawing an amount.
 - No database is used; account data is stored in memory.
 
+## Getting Started
+
+1. Clone the repository:
+
+    ```bash
+    git clone https://github.com/MiadHasan/bank-app.git
+    cd bank-app
+    ```
+
+2. Run the program:
+
+    ```bash
+    python bank.py
+    ```
+
+3. Follow the on-screen prompts to interact with the banking application.
