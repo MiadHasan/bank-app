@@ -8,16 +8,16 @@ class Bank_Account:
     def deposit(self, amount):
         self.balance += amount
         print(
-            f"Deposited {amount} to {self.name}'s account. New balance is {self.balance}")
+            f"Deposited {amount} to {self.name}'s account. New balance is {self.balance}\n")
 
     def withdraw(self, amount, minimum_balance):
         if self.balance - amount < minimum_balance:
             print(
-                f"Insufficient balance. Minimum balance is {minimum_balance}")
+                f"Insufficient balance. Minimum balance is {minimum_balance}\n")
         else:
             self.balance -= amount
             print(
-                f"Withdrew {amount} from {self.name}'s account. New balance is {self.balance}")
+                f"Withdrew {amount} from {self.name}'s account. New balance is {self.balance}\n")
 
 
 class Saving_Account(Bank_Account):
@@ -96,41 +96,57 @@ class Banking_Application:
             return ("salary", Salary_Account().min_balance,
                     Salary_Account().opening_balance)
 
+    def display(self, account_number, name, account_type, balance):
+        print(
+            f"Account Number: {account_number} | Name: {name} | Account Type: {account_type} | Balance: {balance}\n"
+        )
+
     def display_accounts(self):
+        if len(self.accounts) == 0:
+            print("Currently no accounts found.\n")
+            return
         for account in self.accounts:
-            print(
-                f"Account Number: {account.account_number} | Name: {account.name} | Account Type: {account.type} | Balance: {account.balance}"
-            )
+            self.display(account.account_number, account.name,
+                         account.type, account.balance)
+        print("")
 
     def update_account(self, account_number, new_name):
         for account in self.accounts:
             if account.account_number == account_number:
                 account.name = new_name
-                print("Account updated successfully.")
+                print("Account updated successfully.\n")
                 return
-        print("Account not found.")
+        print("Account not found.\n")
 
     def delete_account(self, account_number):
         for account in self.accounts:
             if account.account_number == account_number:
                 self.accounts.remove(account)
-                print("Account deleted successfully.")
+                print("Account deleted successfully.\n")
                 return
-        print("Account not found.")
+        print("Account not found.\n")
 
     def deposit_amount(self, account_number, amount):
         for account in self.accounts:
             if account.account_number == account_number:
                 account.deposit(amount)
                 return
-        print("Account not found.")
+        print("Account not found.\n")
 
     def withdraw_amount(self, account_number, amount):
         for account in self.accounts:
             if account.account_number == account_number:
                 account.withdraw(amount, account.get_min_balance())
                 return
-        print("Account not found.")
+        print("Account not found.\n")
+
+    def get_account_details(self, account_number):
+        for account in self.accounts:
+            if account.account_number == account_number:
+                self.display(account.account_number, account.name,
+                             account.type, account.balance)
+                return
+        print("Account not found.\n")
 
 
 bank = Banking_Application()
@@ -146,7 +162,7 @@ while True:
     print("8. Exit")
 
     choice = input("Enter your choice (1-8): ")
-
+    print("")
     if choice == "1":
         name = input("Enter account holder's name: ")
         print("There are three types of accounts: ")
@@ -155,7 +171,7 @@ while True:
         print("3. Salary account")
         account_type_option = input("Enter account type (1-3): ")
         if account_type_option not in ["1", "2", "3"]:
-            print("Invalid option.")
+            print("Invalid option.\n")
             continue
         account_type, min_balance, opening_balance = bank.get_constrains_and_type(
             account_type_option)
@@ -165,10 +181,11 @@ while True:
         balance = float(
             input("Enter initial balance more than opening deposit: "))
         if balance < min_balance:
-            print("Insufficient opening balance.")
+            print("Insufficient opening balance.\n")
             continue
         acc_num = bank.create_new_account(name, account_type, balance)
-        print(f"Account created successfully. Account number is {acc_num}")
+        print(
+            f"Account created successfully. Your account number is: {acc_num}.\n")
 
     elif choice == "2":
         bank.display_accounts()
@@ -187,7 +204,7 @@ while True:
         amount = float(input("Enter amount to deposit: "))
         if amount <= 0:
             print(
-                "Invalid amount. Please enter a positive amount to deposit.")
+                "Invalid amount. Please enter a positive amount to deposit.\n")
             continue
         bank.deposit_amount(account_number, amount)
 
@@ -196,15 +213,16 @@ while True:
         amount = float(input("Enter amount to withdraw: "))
         if amount <= 0:
             print(
-                "Invalid amount. Please enter a positive amount to withdraw.")
+                "Invalid amount. Please enter a positive amount to withdraw.\n")
             continue
         bank.withdraw_amount(account_number, amount)
 
     elif choice == "7":
-        print(choice)
+        account_number = int(input("Enter account number to search: "))
+        bank.get_account_details(account_number)
 
     elif choice == "8":
-        print(choice)
+        print("Exiting the banking application.")
         break
 
     else:
