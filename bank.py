@@ -5,6 +5,9 @@ class Bank_Account:
         self.balance = balance
         self.account_number = account_number
 
+    def deposit(self, amount):
+        self.balance += amount
+
 
 class Saving_Account(Bank_Account):
 
@@ -104,6 +107,14 @@ class Banking_Application:
                 return
         print("Account not found.")
 
+    def deposit_amount(self, account_number, amount):
+        for account in self.accounts:
+            if account.account_number == account_number:
+                account.deposit(amount)
+                print("Amount deposited successfully.")
+                return
+        print("Account not found.")
+
 
 bank = Banking_Application()
 
@@ -134,7 +145,7 @@ while True:
         print(
             f"Opening deposit for this account is {opening_balance} and minimum balance is {min_balance}"
         )
-        balance = int(
+        balance = float(
             input("Enter initial balance more than opening deposit: "))
         if balance < min_balance:
             print("Insufficient opening balance.")
@@ -155,7 +166,13 @@ while True:
         bank.delete_account(account_number)
 
     elif choice == "5":
-        print(choice)
+        account_number = int(input("Enter account number to deposit: "))
+        amount = float(input("Enter amount to deposit: "))
+        if amount <= 0:
+            print(
+                "Invalid amount. Please enter a positive amount to deposit.")
+            continue
+        bank.deposit_amount(account_number, amount)
 
     elif choice == "6":
         print(choice)
