@@ -96,6 +96,14 @@ class Banking_Application:
                 return
         print("Account not found.")
 
+    def delete_account(self, account_number):
+        for account in self.accounts:
+            if account.account_number == account_number:
+                self.accounts.remove(account)
+                print("Account deleted successfully.")
+                return
+        print("Account not found.")
+
 
 bank = Banking_Application()
 
@@ -143,7 +151,8 @@ while True:
         bank.update_account(account_number, new_name)
 
     elif choice == "4":
-        print(choice)
+        account_number = int(input("Enter account number to delete: "))
+        bank.delete_account(account_number)
 
     elif choice == "5":
         print(choice)
