@@ -7,6 +7,17 @@ class Bank_Account:
 
     def deposit(self, amount):
         self.balance += amount
+        print(
+            f"Deposited {amount} to {self.name}'s account. New balance is {self.balance}")
+
+    def withdraw(self, amount, minimum_balance):
+        if self.balance - amount < minimum_balance:
+            print(
+                f"Insufficient balance. Minimum balance is {minimum_balance}")
+        else:
+            self.balance -= amount
+            print(
+                f"Withdrew {amount} from {self.name}'s account. New balance is {self.balance}")
 
 
 class Saving_Account(Bank_Account):
@@ -111,7 +122,13 @@ class Banking_Application:
         for account in self.accounts:
             if account.account_number == account_number:
                 account.deposit(amount)
-                print("Amount deposited successfully.")
+                return
+        print("Account not found.")
+
+    def withdraw_amount(self, account_number, amount):
+        for account in self.accounts:
+            if account.account_number == account_number:
+                account.withdraw(amount, account.get_min_balance())
                 return
         print("Account not found.")
 
@@ -175,7 +192,13 @@ while True:
         bank.deposit_amount(account_number, amount)
 
     elif choice == "6":
-        print(choice)
+        account_number = int(input("Enter account number to withdraw: "))
+        amount = float(input("Enter amount to withdraw: "))
+        if amount <= 0:
+            print(
+                "Invalid amount. Please enter a positive amount to withdraw.")
+            continue
+        bank.withdraw_amount(account_number, amount)
 
     elif choice == "7":
         print(choice)
