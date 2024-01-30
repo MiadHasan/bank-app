@@ -4,10 +4,13 @@ from account_types import Saving_Account, Current_Account, Salary_Account
 class Banking_Application:
 
     def __init__(self) -> None:
+        # all the created accounts instances are store
         self.accounts = []
+        # total number of accounts created, to get the unique account number
         self.total_accounts_created = 0
 
     def create_new_account(self, name, type, balance):
+        # create account if the constrains met
         if type == "saving":
             account = Saving_Account(
                 name, balance, self.total_accounts_created+1)
@@ -22,6 +25,7 @@ class Banking_Application:
         return self.total_accounts_created
 
     def get_constrains_and_type(self, choice):
+        # returns the constrains for creating user selected account type
         if choice == "1":
             return ("saving", Saving_Account().min_balance,
                     Saving_Account().opening_balance)
@@ -38,6 +42,7 @@ class Banking_Application:
         )
 
     def display_accounts(self):
+        # display all the accounts
         if len(self.accounts) == 0:
             print("No accounts to display.\n")
             return
@@ -47,6 +52,7 @@ class Banking_Application:
         print("")
 
     def update_account(self, account_number, new_name):
+        # user could only change the holder's name after creating an account
         for account in self.accounts:
             if account.account_number == account_number:
                 account.name = new_name
@@ -70,6 +76,7 @@ class Banking_Application:
         print("Account not found.\n")
 
     def withdraw_amount(self, account_number, amount):
+        # withdraw amount if the remaining balance is more than minimum balance
         for account in self.accounts:
             if account.account_number == account_number:
                 account.withdraw(amount, account.get_min_balance())
@@ -77,6 +84,7 @@ class Banking_Application:
         print("Account not found.\n")
 
     def get_account_details(self, account_number):
+        # get account details for a specific account
         for account in self.accounts:
             if account.account_number == account_number:
                 self.display(account.account_number, account.name,

@@ -12,6 +12,7 @@ while True:
     print("7. Search for account")
     print("8. Exit")
 
+    # taking user input to perform the operations
     choice = input("Enter your choice (1-8): ")
     print("")
     if choice == "1":
@@ -24,6 +25,7 @@ while True:
         if account_type_option not in ["1", "2", "3"]:
             print("Invalid option.\n")
             continue
+        # get details of different account types
         account_type, min_balance, opening_balance = bank.get_constrains_and_type(
             account_type_option)
         print(
